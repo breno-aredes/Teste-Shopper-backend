@@ -7,16 +7,14 @@ export async function uploadMeasure(
   res: Response,
   next: NextFunction
 ) {
-  console.log("teste");
   try {
     const data = req.body;
+    console.log(data);
 
-    await measureServices.uploadMeasure(data);
+    const response = await measureServices.uploadMeasure(data);
 
-    res.status(httpStatus.CREATED).send({
-      success: true,
-    });
+    res.status(httpStatus.CREATED).send(response);
   } catch (error) {
-    return res.status(httpStatus.CONFLICT);
+    next(error);
   }
 }
