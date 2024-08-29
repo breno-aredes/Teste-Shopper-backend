@@ -7,7 +7,7 @@ const measureRouter = Router();
 
 measureRouter
   .get("")
-  .post("", schemaValidate(uploadSchema), uploadMeasure)
+  .post("/upload", schemaValidate(uploadSchema), uploadMeasure)
   .patch("");
 
 export { measureRouter };

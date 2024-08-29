@@ -12,6 +12,10 @@ export function handlingError(
     return res.status(httpStatus.CONFLICT).send(err);
   }
 
+  if (err.error_code === "INVALID_DATA") {
+    return res.status(httpStatus.BAD_REQUEST).send(err);
+  }
+
   return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({
     error: "InternalServerError",
     message: "Internal Server Error",
