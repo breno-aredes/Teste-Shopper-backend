@@ -23,13 +23,13 @@ async function getMeasureByCustomerId(
   const validMeasureTypes = ["WATER", "GAS"];
 
   if (data.measure_type && !validMeasureTypes.includes(data.measure_type)) {
-    throw errors.conflictsError("Leitura do mês já realizada"); //erro temporario
+    throw errors.invalidTypeError("Tipo de medição não permitida");
   }
 
   const response = await measureRepository.getMeasureByCustomerId(data);
 
   if (response.measures.length === 0) {
-    throw errors.conflictsError("Leitura do mês já realizada"); //erro temporario
+    throw errors.NotFoundError("Nenhuma leitura encontrada");
   }
 
   return response;

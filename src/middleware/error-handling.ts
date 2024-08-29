@@ -12,8 +12,12 @@ export function handlingError(
     return res.status(httpStatus.CONFLICT).send(err);
   }
 
-  if (err.error_code === "INVALID_DATA") {
+  if (err.error_code === "INVALID_DATA" || "INVALID_TYPE") {
     return res.status(httpStatus.BAD_REQUEST).send(err);
+  }
+
+  if (err.error_code === "MEASURES_NOT_FOUND") {
+    return res.status(httpStatus.NOT_FOUND).send(err);
   }
 
   return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({

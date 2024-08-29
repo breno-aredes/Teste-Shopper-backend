@@ -14,4 +14,23 @@ function invalidError(message: string): ApplicationError {
   };
 }
 
-export default { conflictsError, invalidError };
+function invalidTypeError(message: string): ApplicationError {
+  return {
+    error_code: "INVALID_TYPE",
+    error_description: message,
+  };
+}
+
+function NotFoundError(message: string): ApplicationError {
+  return {
+    error_code: "MEASURES_NOT_FOUND",
+    error_description: message,
+  };
+}
+
+export default {
+  conflictsError,
+  invalidError,
+  invalidTypeError,
+  NotFoundError,
+};
