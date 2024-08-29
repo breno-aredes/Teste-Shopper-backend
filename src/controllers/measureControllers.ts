@@ -9,11 +9,15 @@ export async function getMeasureByCustomer(
 ) {
   try {
     const { customer_code } = req.params;
-    const { measure_type } = req.query;
+    let { measure_type } = req.query;
+
+    measure_type = measure_type
+      ? String(measure_type).toUpperCase()
+      : undefined;
 
     const response = await measureServices.getMeasureByCustomer({
       customer_code,
-      measure_type: measure_type ? String(measure_type) : undefined,
+      measure_type,
     });
 
     res.status(httpStatus.OK).send(response);
