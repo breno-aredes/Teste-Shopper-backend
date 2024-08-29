@@ -1,5 +1,10 @@
+import { MeasureType } from "@prisma/client";
 import errors from "errors";
-import { uploadType } from "protocols/upload";
+import {
+  getCostumerMeasure,
+  promiseMeasure,
+  uploadType,
+} from "protocols/measure";
 import measureRepository from "repositories/measureRepository";
 
 async function uploadMeasure(data: uploadType): Promise<any> {
@@ -12,6 +17,25 @@ async function uploadMeasure(data: uploadType): Promise<any> {
   return await measureRepository.createMeasure(data);
 }
 
+async function getMeasureByCustomerId(
+  data: getCostumerMeasure
+): Promise<promiseMeasure> {
+  const validMeasureTypes = ["WATER", "GAS"];
+
+  if (data.measure_type && !validMeasureTypes.includes(data.measure_type)) {
+    throw errors.conflictsError("Leitura do mês já realizada"); //erro temporario
+  }
+
+  const response = await measureRepository.getMeasureByCustomerId(data);
+
+  if (response.measures.length === 0) {
+    throw errors.conflictsError("Leitura do mês já realizada"); //erro temporario
+  }
+
+  return response;
+}
+
 export default {
   uploadMeasure,
+  getMeasureByCustomerId,
 };

@@ -1,6 +1,12 @@
-import { Measure } from "@prisma/client";
+import { Measure, MeasureType } from "@prisma/client";
 import prisma from "database";
-import { geminiImg, uploadType } from "protocols/upload";
+import {
+  geminiImg,
+  getCostumerMeasure,
+  getMeasureResponse,
+  promiseMeasure,
+  uploadType,
+} from "protocols/measure";
 
 async function getMeasure(data: uploadType): Promise<any> {
   const measureDate = new Date(data.measure_datetime);
@@ -34,7 +40,7 @@ async function createMeasure(data: uploadType, img?: geminiImg) {
   img = {
     measure_value: 2,
     image_url: "",
-    has_confirmed: true,
+    has_confirmed: false,
   };
 
   const newMeasure = await prisma.measure.create({
@@ -44,7 +50,7 @@ async function createMeasure(data: uploadType, img?: geminiImg) {
       measure_type: data.measure_type,
       measure_value: img.measure_value,
       image_url: img.image_url,
-      has_confirmed: img.has_confirmed,
+      has_confirmed: false,
     },
   });
 
@@ -55,7 +61,36 @@ async function createMeasure(data: uploadType, img?: geminiImg) {
   };
 }
 
+async function getMeasureByCustomerId(
+  data: getCostumerMeasure
+): Promise<promiseMeasure> {
+  const { customer_code, measure_type } = data;
+
+  const measures = await prisma.measure.findMany({
+    where: {
+      customer_code: customer_code,
+      ...(measure_type && { measure_type: measure_type as MeasureType }),
+    },
+    orderBy: {
+      measure_datetime: "desc",
+    },
+  });
+  const formattedMeasures: getMeasureResponse[] = measures.map((measure) => ({
+    measure_uuid: measure.measure_uuid,
+    measure_datetime: measure.measure_datetime,
+    measure_type: measure.measure_type,
+    has_confirmed: measure.has_confirmed,
+    image_url: measure.image_url,
+  }));
+
+  return {
+    customer_code,
+    measures: formattedMeasures,
+  };
+}
+
 export default {
   getMeasure,
   createMeasure,
+  getMeasureByCustomerId,
 };

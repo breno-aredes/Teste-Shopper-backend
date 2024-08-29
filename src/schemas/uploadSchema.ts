@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { uploadType } from "protocols/upload";
+import { uploadType } from "protocols/measure";
 
 export const uploadSchema = Joi.object<uploadType>({
   image: Joi.string().base64().required(),
