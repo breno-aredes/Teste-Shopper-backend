@@ -1,10 +1,11 @@
 import { Measure, MeasureType } from "@prisma/client";
 import prisma from "database";
 import {
+  attMeasure,
   geminiImg,
   getCostumerMeasure,
   getMeasureResponse,
-  promiseMeasure,
+  promiseGetMeasure,
   uploadType,
 } from "protocols/measure";
 
@@ -61,9 +62,9 @@ async function createMeasure(data: uploadType, img?: geminiImg) {
   };
 }
 
-async function getMeasureByCustomerId(
+async function getMeasureByCustomer(
   data: getCostumerMeasure
-): Promise<promiseMeasure> {
+): Promise<promiseGetMeasure> {
   const { customer_code, measure_type } = data;
 
   const measures = await prisma.measure.findMany({
@@ -89,8 +90,32 @@ async function getMeasureByCustomerId(
   };
 }
 
+async function getMeasureByUuid(data: attMeasure): Promise<Measure | null> {
+  const response = await prisma.measure.findFirst({
+    where: {
+      measure_uuid: data.measure_uuid,
+      measure_value: data.confirmed_value,
+    },
+  });
+
+  return response;
+}
+
+async function patchMeasure(measure_uuid: string) {
+  await prisma.measure.update({
+    where: {
+      measure_uuid: measure_uuid,
+    },
+    data: {
+      has_confirmed: true,
+    },
+  });
+}
+
 export default {
   getMeasure,
   createMeasure,
-  getMeasureByCustomerId,
+  getMeasureByCustomer,
+  getMeasureByUuid,
+  patchMeasure,
 };

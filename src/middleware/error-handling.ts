@@ -8,11 +8,14 @@ export function handlingError(
   res: Response,
   _next: NextFunction
 ) {
-  if (err.error_code === "DOUBLE_REPORT") {
+  if (
+    err.error_code === "DOUBLE_REPORT" ||
+    err.error_code === "CONFIRMATION_DUPLICATE"
+  ) {
     return res.status(httpStatus.CONFLICT).send(err);
   }
 
-  if (err.error_code === "INVALID_DATA" || "INVALID_TYPE") {
+  if (err.error_code === "INVALID_DATA" || err.error_code === "INVALID_TYPE") {
     return res.status(httpStatus.BAD_REQUEST).send(err);
   }
 

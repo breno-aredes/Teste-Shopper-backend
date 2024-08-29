@@ -28,9 +28,17 @@ function NotFoundError(message: string): ApplicationError {
   };
 }
 
+function conflictsDuplicateError(message: string): ApplicationError {
+  return {
+    error_code: "CONFIRMATION_DUPLICATE",
+    error_description: message,
+  };
+}
+
 export default {
   conflictsError,
   invalidError,
   invalidTypeError,
   NotFoundError,
+  conflictsDuplicateError,
 };

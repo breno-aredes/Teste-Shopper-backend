@@ -2,16 +2,16 @@ import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
 import measureServices from "services/measureServices";
 
-export async function getMeasureByCustomerId(
+export async function getMeasureByCustomer(
   req: Request,
   res: Response,
   next: NextFunction
 ) {
-  const { customer_code } = req.params;
-  const { measure_type } = req.query;
-
   try {
-    const response = await measureServices.getMeasureByCustomerId({
+    const { customer_code } = req.params;
+    const { measure_type } = req.query;
+
+    const response = await measureServices.getMeasureByCustomer({
       customer_code,
       measure_type: measure_type ? String(measure_type) : undefined,
     });
@@ -42,4 +42,14 @@ export async function confirmMeasure(
   req: Request,
   res: Response,
   next: NextFunction
-) {}
+) {
+  try {
+    const data = req.body;
+
+    await measureServices.confirmMeasure(data);
+
+    res.status(httpStatus.OK).send({ sucess: true });
+  } catch (error) {
+    next(error);
+  }
+}

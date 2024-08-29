@@ -1,8 +1,8 @@
-import { MeasureType } from "@prisma/client";
 import errors from "errors";
 import {
+  attMeasure,
   getCostumerMeasure,
-  promiseMeasure,
+  promiseGetMeasure,
   uploadType,
 } from "protocols/measure";
 import measureRepository from "repositories/measureRepository";
@@ -17,16 +17,16 @@ async function uploadMeasure(data: uploadType): Promise<any> {
   return await measureRepository.createMeasure(data);
 }
 
-async function getMeasureByCustomerId(
+async function getMeasureByCustomer(
   data: getCostumerMeasure
-): Promise<promiseMeasure> {
+): Promise<promiseGetMeasure> {
   const validMeasureTypes = ["WATER", "GAS"];
 
   if (data.measure_type && !validMeasureTypes.includes(data.measure_type)) {
     throw errors.invalidTypeError("Tipo de medição não permitida");
   }
 
-  const response = await measureRepository.getMeasureByCustomerId(data);
+  const response = await measureRepository.getMeasureByCustomer(data);
 
   if (response.measures.length === 0) {
     throw errors.NotFoundError("Nenhuma leitura encontrada");
@@ -35,7 +35,22 @@ async function getMeasureByCustomerId(
   return response;
 }
 
+async function confirmMeasure(data: attMeasure) {
+  const existingMeasure = await measureRepository.getMeasureByUuid(data);
+
+  if (!existingMeasure) {
+    throw errors.NotFoundError("Nenhuma leitura encontrada");
+  }
+
+  if (existingMeasure.has_confirmed) {
+    throw errors.conflictsDuplicateError("Leitura do mês já confirmada");
+  }
+
+  await measureRepository.patchMeasure(data.measure_uuid);
+}
+
 export default {
   uploadMeasure,
-  getMeasureByCustomerId,
+  getMeasureByCustomer,
+  confirmMeasure,
 };

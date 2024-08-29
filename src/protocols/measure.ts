@@ -26,7 +26,12 @@ export interface getMeasureResponse {
   image_url: string;
 }
 
-export interface promiseMeasure {
+export interface promiseGetMeasure {
   customer_code: string;
   measures: getMeasureResponse[];
+}
+
+export interface attMeasure {
+  measure_uuid: string;
+  confirmed_value: number;
 }

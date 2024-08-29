@@ -9,7 +9,9 @@ export function schemaValidate(schema: ObjectSchema) {
       const errMessages = error.details.map(
         (err: ValidationErrorItem) => err.message
       );
-      return res.status(422).send(errMessages);
+      return res
+        .status(400)
+        .send({ error_code: "INVALID_DATA", error_description: errMessages });
     }
     next();
   };
