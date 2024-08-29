@@ -1,4 +1,4 @@
 export type ApplicationError = {
-  name: string;
-  message: string;
+  error_code: string;
+  error_description: string;
 };

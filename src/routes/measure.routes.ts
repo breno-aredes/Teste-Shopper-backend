@@ -5,6 +5,9 @@ import { uploadSchema } from "schemas/uploadSchema";
 
 const measureRouter = Router();
 
-measureRouter.get("").post("", uploadMeasure).patch("");
+measureRouter
+  .get("")
+  .post("", schemaValidate(uploadSchema), uploadMeasure)
+  .patch("");
 
 export { measureRouter };

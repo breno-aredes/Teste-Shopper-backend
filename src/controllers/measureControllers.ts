@@ -9,7 +9,6 @@ export async function uploadMeasure(
 ) {
   try {
     const data = req.body;
-    console.log(data);
 
     const response = await measureServices.uploadMeasure(data);
 
