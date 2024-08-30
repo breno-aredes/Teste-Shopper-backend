@@ -7,10 +7,9 @@ export type uploadType = {
   measure_type: MeasureType;
 };
 
-export type geminiImg = {
-  measure_value: number;
+export type geminiResponse = {
   image_url: string;
-  has_confirmed: boolean;
+  measure_value: number;
 };
 
 export type getCostumerMeasure = {

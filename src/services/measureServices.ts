@@ -5,6 +5,7 @@ import {
   promiseGetMeasure,
   uploadType,
 } from "protocols/measure";
+import { geminiImage } from "repositories/geminiRepository";
 import measureRepository from "repositories/measureRepository";
 
 async function uploadMeasure(data: uploadType): Promise<any> {
@@ -14,7 +15,9 @@ async function uploadMeasure(data: uploadType): Promise<any> {
     throw errors.conflictsError("Leitura do mês já realizada");
   }
 
-  return await measureRepository.createMeasure(data);
+  const geminiData = await geminiImage(data.image);
+
+  return await measureRepository.createMeasure(data, geminiData);
 }
 
 async function getMeasureByCustomer(

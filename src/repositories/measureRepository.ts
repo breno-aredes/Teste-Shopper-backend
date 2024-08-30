@@ -2,7 +2,7 @@ import { Measure, MeasureType } from "@prisma/client";
 import prisma from "database";
 import {
   attMeasure,
-  geminiImg,
+  geminiResponse,
   getCostumerMeasure,
   getMeasureResponse,
   promiseGetMeasure,
@@ -37,20 +37,14 @@ async function getMeasure(data: uploadType): Promise<any> {
   return response;
 }
 
-async function createMeasure(data: uploadType, img?: geminiImg) {
-  img = {
-    measure_value: 2,
-    image_url: "",
-    has_confirmed: false,
-  };
-
+async function createMeasure(data: uploadType, geminiData: geminiResponse) {
   const newMeasure = await prisma.measure.create({
     data: {
       customer_code: data.customer_code,
       measure_datetime: new Date(data.measure_datetime),
       measure_type: data.measure_type,
-      measure_value: img.measure_value,
-      image_url: img.image_url,
+      measure_value: geminiData.measure_value,
+      image_url: geminiData.image_url,
       has_confirmed: false,
     },
   });
