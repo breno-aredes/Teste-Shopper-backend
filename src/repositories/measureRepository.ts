@@ -2,6 +2,7 @@ import { Measure, MeasureType } from "@prisma/client";
 import prisma from "database";
 import {
   attMeasure,
+  CreateMeasure,
   geminiResponse,
   getCostumerMeasure,
   getMeasureResponse,
@@ -9,7 +10,7 @@ import {
   uploadType,
 } from "protocols/measure";
 
-async function getMeasure(data: uploadType): Promise<any> {
+async function getMeasure(data: uploadType): Promise<Measure | null> {
   const measureDate = new Date(data.measure_datetime);
   const startOfMonth = new Date(
     measureDate.getFullYear(),
@@ -34,10 +35,14 @@ async function getMeasure(data: uploadType): Promise<any> {
     },
   });
 
+  console.log(response);
   return response;
 }
 
-async function createMeasure(data: uploadType, geminiData: geminiResponse) {
+async function createMeasure(
+  data: uploadType,
+  geminiData: geminiResponse
+): Promise<CreateMeasure> {
   const newMeasure = await prisma.measure.create({
     data: {
       customer_code: data.customer_code,

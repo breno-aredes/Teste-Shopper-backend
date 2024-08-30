@@ -1,6 +1,7 @@
 import errors from "errors";
 import {
   attMeasure,
+  CreateMeasure,
   getCostumerMeasure,
   promiseGetMeasure,
   uploadType,
@@ -8,7 +9,7 @@ import {
 import { geminiImage } from "repositories/geminiRepository";
 import measureRepository from "repositories/measureRepository";
 
-async function uploadMeasure(data: uploadType): Promise<any> {
+async function uploadMeasure(data: uploadType): Promise<CreateMeasure> {
   const existingMeasure = await measureRepository.getMeasure(data);
 
   if (existingMeasure) {

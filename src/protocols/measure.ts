@@ -34,3 +34,9 @@ export interface attMeasure {
   measure_uuid: string;
   confirmed_value: number;
 }
+
+export interface CreateMeasure {
+  image_url: string;
+  measure_value: number;
+  measure_uuid: string;
+}
