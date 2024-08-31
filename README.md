@@ -63,7 +63,7 @@ Endpoint para enviar e analisar imagens de medidores.
 
 **Request Body:**
 
-```json
+```bash
 {
   "image": "base64",
   "customer_code": "string",
@@ -86,13 +86,14 @@ Status Code 200 - Operação realizada com sucesso
 
 Status Code 400 - Dados inválidos
 
-```json
+```bash
 {
   "error_code": "INVALID_DATA",
   "error_description": "<descrição do erro>"
 }
-A descrição do erro avisa qual parametro do body é invalido
 ```
+A descrição do erro avisa qual parametro do body é invalido
+
 
 Status Code 409 - Leitura duplicada
 
@@ -128,13 +129,13 @@ Status Code 200 - Operação realizada com sucesso
 
 Status Code 400 - Dados inválidos
 
-```json
+```bash
 {
   "error_code": "INVALID_DATA",
   "error_description": "<descrição do erro>"
 }
-A descrição do erro avisa qual parametro do body é invalido
 ```
+A descrição do erro avisa qual parametro do body é invalido
 
 Status Code 404 - Leitura não encontrada
 
@@ -208,11 +209,12 @@ Aqui estão algumas documentações importantes para as tecnologias utilizadas:
 - **TypeScript:** https://www.typescriptlang.org/docs/
 - **Express:** https://expressjs.com/
 - **Joi:** https://joi.dev/api/
+- **PostgresSQL:** https://www.postgresql.org/docs/
 - **Prisma:** https://www.prisma.io/docs
   - Guia de início do zero: [Link](https://www.prisma.io/docs/getting-started/setup-prisma/start-from-scratch/relational-databases-typescript-postgres)
   - Extensão VS Code: [Link](https://marketplace.visualstudio.com/items?itemName=Prisma.prisma)
 - **Docker**: https://docs.docker.com/
   - Extensão VS Code: [Link](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker)
-- **PostgresSQL:** https://www.postgresql.org/docs/
+
 
 Essas documentações oficiais são excelentes recursos para aprender e consultar enquanto você trabalha com essas tecnologias.
