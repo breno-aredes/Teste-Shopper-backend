@@ -24,23 +24,18 @@ async function getMeasure(data: uploadType): Promise<Measure | null> {
     0
   );
 
-  try {
-    const response = await prisma.measure.findFirst({
-      where: {
-        customer_code: data.customer_code,
-        measure_type: data.measure_type,
-        measure_datetime: {
-          gte: startOfMonth,
-          lt: endOfMonth,
-        },
+  const response = await prisma.measure.findFirst({
+    where: {
+      customer_code: data.customer_code,
+      measure_type: data.measure_type,
+      measure_datetime: {
+        gte: startOfMonth,
+        lt: endOfMonth,
       },
-    });
-    console.log(response);
-    return response;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
+    },
+  });
+
+  return response;
 }
 
 async function createMeasure(
