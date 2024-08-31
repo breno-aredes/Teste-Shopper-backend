@@ -53,7 +53,7 @@ Endpoint para verificar a saúde da aplicação. Retorna apenas Status Code 200,
 
 ```json
 {
- ok!
+ "ok!"
 }
 ```
 
@@ -68,7 +68,7 @@ Endpoint para enviar e analisar imagens de medidores.
   "image": "base64",
   "customer_code": "string",
   "measure_datetime": "datetime",
-  "measure_type": "WATER" ou "GAS"
+  "measure_type": "WATER" || "GAS"
 }
 ```
 
@@ -91,7 +91,7 @@ Status Code 400 - Dados inválidos
   "error_code": "INVALID_DATA",
   "error_description": "<descrição do erro>"
 }
-//A descrição do erro avisa qual parametro do body é invalido
+A descrição do erro avisa qual parametro do body é invalido
 ```
 
 Status Code 409 - Leitura duplicada
@@ -133,7 +133,7 @@ Status Code 400 - Dados inválidos
   "error_code": "INVALID_DATA",
   "error_description": "<descrição do erro>"
 }
-//A descrição do erro avisa qual parametro do body é invalido
+A descrição do erro avisa qual parametro do body é invalido
 ```
 
 Status Code 404 - Leitura não encontrada
