@@ -1,26 +1,26 @@
 services:
   db:
-    container_name: "shopper-db"
+    container_name: db
     image: postgres
     volumes:
       - storage_db:/var/lib/postgresql/data
+    restart: always
     ports:
-      - "5432:5432"
+      - 5432:5432
     environment:
-      POSTGRES_USER: ${POSTGRES_USERNAME}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DATABASE}
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: mydatabase
 
-  node:
-    container_name: "shopper-node"
-    image: node
-    working_dir: /usr/src/app
-    volumes:
-      - .:/usr/src/app
+  api:
+    container_name: api
+    build: .
     ports:
-      - "3000:3000"
+      - 4000:4000
     depends_on:
       - db
+    environment:
+      DATABASE_URL: "postgresql://postgres:root@db:5432/mydatabase"
 
 volumes:
   storage_db:

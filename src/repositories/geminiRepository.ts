@@ -2,7 +2,7 @@ import { GoogleAIFileManager } from "@google/generative-ai/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import fs from "fs";
 import path from "path";
-import { geminiResponse } from "protocols/measure";
+import { geminiResponse } from "../protocols/measure";
 
 export async function geminiImage(image: string): Promise<geminiResponse> {
   const mimeType = "image/jpeg";

@@ -1,4 +1,4 @@
-import { ApplicationError } from "protocols/errors";
+import { ApplicationError } from "../protocols/errors";
 
 function conflictsError(message: string): ApplicationError {
   return {

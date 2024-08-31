@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import httpStatus from "http-status";
-import measureServices from "services/measureServices";
+import measureServices from "../services/measureServices";
 
 export async function getMeasureByCustomer(
   req: Request,

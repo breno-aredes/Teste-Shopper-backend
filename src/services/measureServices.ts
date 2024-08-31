@@ -1,13 +1,13 @@
-import errors from "errors";
+import errors from "../errors";
 import {
   attMeasure,
   CreateMeasure,
   getCostumerMeasure,
   promiseGetMeasure,
   uploadType,
-} from "protocols/measure";
-import { geminiImage } from "repositories/geminiRepository";
-import measureRepository from "repositories/measureRepository";
+} from "../protocols/measure";
+import { geminiImage } from "../repositories/geminiRepository";
+import measureRepository from "../repositories/measureRepository";
 
 async function uploadMeasure(data: uploadType): Promise<CreateMeasure> {
   const existingMeasure = await measureRepository.getMeasure(data);

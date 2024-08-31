@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { attMeasure, uploadType } from "protocols/measure";
+import { attMeasure, uploadType } from "../protocols/measure";
 
 const isBase64 = (value: string) => {
   const base64Regex = /^[A-Za-z0-9+/]+[=]{0,2}$/;

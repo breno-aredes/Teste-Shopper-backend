@@ -2,10 +2,10 @@ import {
   confirmMeasure,
   getMeasureByCustomer,
   uploadMeasure,
-} from "controllers/measureControllers";
+} from "../controllers/measureControllers";
 import { Router } from "express";
-import { schemaValidate } from "middleware/schema.validate";
-import { attMeasureSchema, uploadSchema } from "schemas/MeasureSchemas";
+import { schemaValidate } from "../middleware/schema.validate";
+import { attMeasureSchema, uploadSchema } from "../schemas/MeasureSchemas";
 
 const measureRouter = Router();
 

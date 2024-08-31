@@ -1,13 +1,13 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
     "paths": {
       "@config/*": ["./config/*"]
     },
     "module": "commonjs",
-    "outDir": "dist",
+    "outDir": "./dist",
     "esModuleInterop": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "rootDir": "./src"
   },
   "ts-node": {
     "esm": true

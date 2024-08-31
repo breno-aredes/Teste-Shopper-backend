@@ -1,7 +1,7 @@
 import express, { Express } from "express";
 import cors from "cors";
-import { handlingError } from "middleware/error-handling";
-import { measureRouter } from "routes/measure.routes";
+import { handlingError } from "./middleware/error-handling";
+import { measureRouter } from "./routes/measure.routes";
 
 const app: Express = express();
 

@@ -1,5 +1,5 @@
 import { Measure, MeasureType } from "@prisma/client";
-import prisma from "database";
+import prisma from "../database";
 import {
   attMeasure,
   CreateMeasure,
@@ -8,7 +8,7 @@ import {
   getMeasureResponse,
   promiseGetMeasure,
   uploadType,
-} from "protocols/measure";
+} from "../protocols/measure";
 
 async function getMeasure(data: uploadType): Promise<Measure | null> {
   const measureDate = new Date(data.measure_datetime);
@@ -24,19 +24,23 @@ async function getMeasure(data: uploadType): Promise<Measure | null> {
     0
   );
 
-  const response = await prisma.measure.findFirst({
-    where: {
-      customer_code: data.customer_code,
-      measure_type: data.measure_type,
-      measure_datetime: {
-        gte: startOfMonth,
-        lt: endOfMonth,
+  try {
+    const response = await prisma.measure.findFirst({
+      where: {
+        customer_code: data.customer_code,
+        measure_type: data.measure_type,
+        measure_datetime: {
+          gte: startOfMonth,
+          lt: endOfMonth,
+        },
       },
-    },
-  });
-
-  console.log(response);
-  return response;
+    });
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
 }
 
 async function createMeasure(
